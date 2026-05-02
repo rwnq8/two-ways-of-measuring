@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Boundaries &amp; Containers</h1>
+  <p class="subtitle">Before distance, before numbers — there was the act of drawing a line.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>The Primitive Act of Distinction</h2>
+    <p>
+      Consider the most fundamental cognitive act possible: <strong>you draw a line</strong>. The line separates the world into two regions — an <em>inside</em> and an <em>outside</em>. Everything on one side is "this." Everything on the other side is "not this."
+    </p>
+    <p>
+      This act — called a <strong>distinction</strong> — is more primitive than counting, more primitive than naming, more primitive than measurement. Before you can say "one, two, three," you must be able to say "this, not that." The boundary creates the very possibility of identity.
+    </p>
+
+    <div class="definition">
+      <strong>Definition (Boundary).</strong> A <strong>boundary</strong> is a rule that, for any candidate point in a space, answers: "inside or outside?" The answer must be unambiguous. A boundary is <em>sharp</em>, <em>closed</em>, and <em>identity-conferring</em>.
+    </div>
+
+    <div class="definition">
+      <strong>Definition (Container).</strong> A <strong>container</strong> is a boundary together with the region it encloses. A container is an entity in its own right, distinct from whatever it may contain. An empty container is still a container.
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Nesting</h2>
+    <p>
+      Having drawn one boundary, you can draw another <em>entirely inside</em> the first. This creates a container within a container — a <strong>nesting</strong>.
+    </p>
+    <p>
+      A point inside the inner container has an <strong>address</strong> — a sequence describing which container holds it at each level, from outermost inward. To measure is to answer: <em>in which container does this thing reside?</em> The <strong>precision</strong> of measurement is the depth of nesting.
+    </p>
+
+    <div class="definition">
+      <strong>Definition (Address).</strong> The <strong>address</strong> of a point is the sequence of choices that identifies which container holds it at each level of nesting. If the nesting has $D$ levels, the address is a sequence of length $D$.
+    </div>
+
+    <div class="info-card">
+      <h4>Example: Three Levels of Nesting</h4>
+      <p>
+        <strong>Level 1:</strong> Two large boxes, labeled $0$ and $1$.<br>
+        <strong>Level 2:</strong> Inside each large box, two medium boxes, labeled $0$ and $1$.<br>
+        <strong>Level 3:</strong> Inside each medium box, two small boxes, labeled $0$ and $1$.
+      </p>
+      <p>
+        A specific small box has the address $(1, 0, 1, \ldots)$: large box $1$, medium box $0$ within that, small box $1$ within that.
+      </p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Two Ways to Nest</h2>
+
+    <h3>Way 1: Linear Nesting</h3>
+    <p>
+      Containers are nested along a single dimension, like Russian dolls. Each container fits inside exactly one larger container. There is no branching. The address is a single real number — the coordinate of the point. Precision is the length of the interval.
+    </p>
+
+    <h3>Way 2: Branching Nesting</h3>
+    <p>
+      At each level, a container contains <em>multiple</em> alternative sub-containers, and the point must be in exactly one of them. The address is a sequence of choices — a path through a tree of containers. Precision is the depth of the path.
+    </p>
+
+    <div class="highlight-box">
+      <p>These two ways are not merely different. They are the <em>only</em> two ways, in a precise sense established by Ostrowski's theorem.</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Zero and Emptiness</h2>
+    <p>
+      If zero is simply "nothing," how can nothing be something? How can we speak of it, count with it, use it in calculations?
+    </p>
+    <p>
+      The container perspective resolves this puzzle. <strong>Zero is an empty container.</strong> The boundary exists — the line that defines the container has been drawn. The space inside is empty. The emptiness is a positive fact <em>about</em> the container, not the absence of all facts.
+    </p>
+    <p>
+      Zero is the number that answers: "How many items are in this container?" when the answer is "none." It is a second-order concept — a number about a number — and it is only coherent when understood through containers.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>What Is a Metric?</h2>
+    <p>
+      A <strong>metric</strong> is a function $d(x, y)$ that assigns a non-negative number (the distance) to every pair of points. It must satisfy three axioms:
+    </p>
+
+    <div class="definition">
+      <strong>Axiom 1 — Non-negativity &amp; Identity:</strong> $d(x, y) \geq 0$, and $d(x, y) = 0$ if and only if $x = y$.
+    </div>
+
+    <div class="definition">
+      <strong>Axiom 2 — Symmetry:</strong> $d(x, y) = d(y, x)$ for all $x, y$. Distance is the same in both directions.
+    </div>
+
+    <div class="definition">
+      <strong>Axiom 3 — Triangle Inequality:</strong> $d(x, z) \leq d(x, y) + d(y, z)$ for all $x, y, z$. The direct path is never longer than a detour.
+    </div>
+
+    <p>
+      The triangle inequality is the crucial one. It is the mathematical root of error accumulation — and its <em>strengthening</em> in hierarchical spaces is what makes fault-tolerant memory possible.
+    </p>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="continuous.html" class="btn btn-primary">Next: The Continuous Way →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

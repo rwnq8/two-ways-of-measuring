@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hierarchical Way — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>The Hierarchical Way</h1>
+  <p class="subtitle">Branching trees. Shared ancestry as distance. The strong triangle inequality.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>The Infinite Tree</h2>
+    <p>
+      Recall <strong>branching nesting</strong>: at each level, a container holds $b$ alternative sub-containers. This structure is the <strong>infinite $b$-ary tree</strong> $T_b$. From a root, $b$ branches emerge. From each child, $b$ more. Forever.
+    </p>
+    <p>
+      A point in this space is an infinite path from the root — a sequence of digits $v = a_0 a_1 a_2 \ldots$, where each $a_i \in \{0, 1, \ldots, b-1\}$. This sequence is the point's <strong>address</strong>.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Interactive Tree Explorer</h2>
+    <div class="demo-container">
+      <div class="demo-header">
+        <h4>Click Nodes to Measure Tree Distance</h4>
+        <button id="tree-reset" class="btn-secondary" style="padding:0.3rem 0.7rem;font-size:0.8rem;">Reset</button>
+      </div>
+      <div class="demo-body">
+        <div class="tree-viz">
+          <canvas id="tree-canvas"></canvas>
+        </div>
+        <div class="tree-info" id="tree-info">
+          <span style="color:#9ca3af">Click two nodes to measure the tree distance between them</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">
+      Each node is a vertex in the binary tree. Its label is its path from the root (a binary sequence). 
+      Two nodes are <strong>close</strong> if they share a long common prefix — they only diverged recently. 
+      They are <strong>far</strong> if they diverge near the root. Distance is $2^{-k}$ where $k$ is the shared prefix length.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Tree Distance: Formal Definition</h2>
+    
+    <div class="definition">
+      <strong>Definition (Common prefix length).</strong> For two points $v, w \in T_b$, the <strong>common prefix length</strong> $k(v, w)$ is the largest $k$ such that $a_i = b_i$ for all $i < k$. If they differ at the first digit, $k = 0$. If they are identical, $k = \infty$.
+    </div>
+
+    <div class="definition">
+      <strong>Definition (Tree distance).</strong> $d_T(v, w) = b^{-k(v, w)}$, with $b^{-\infty} = 0$.
+    </div>
+
+    <div class="info-card">
+      <h4>Worked Examples ($b = 2$)</h4>
+      <table>
+        <tr><th>$v$</th><th>$w$</th><th>Prefix $k$</th><th>Distance</th></tr>
+        <tr><td>$000\ldots$</td><td>$001\ldots$</td><td>$2$</td><td>$2^{-2} = 0.25$</td></tr>
+        <tr><td>$01011\ldots$</td><td>$01010\ldots$</td><td>$4$</td><td>$2^{-4} = 0.0625$</td></tr>
+        <tr><td>$000\ldots$</td><td>$111\ldots$</td><td>$0$</td><td>$2^{0} = 1$ (max)</td></tr>
+        <tr><td>$1010101010\ldots$</td><td>$1010101011\ldots$</td><td>$9$</td><td>$2^{-9} \approx 0.002$</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>The Strong Triangle Inequality</h2>
+
+    <div class="theorem">
+      <div class="theorem-label">Theorem (Ultrametric Inequality)</div>
+      <p>For any three points $x, y, z$ in $T_b$:</p>
+      $$d_T(x, z) \leq \max\!\bigl(d_T(x, y),\; d_T(y, z)\bigr)$$
+      <p>This is <strong>stronger</strong> than the ordinary triangle inequality $d(x,z) \leq d(x,y) + d(y,z)$. Instead of the <em>sum</em>, it uses the <em>maximum</em>. The strong inequality implies the ordinary one.</p>
+    </div>
+
+    <details class="proof">
+      <summary>Click to expand proof</summary>
+      <p>Let $k(x,y)$ be the common prefix length. The key observation:</p>
+      $$k(x, z) \geq \min(k(x, y), k(y, z))$$
+      <p>Why? If $x$ and $y$ agree for $p$ digits, and $y$ and $z$ agree for $q$ digits, then $x$ and $z$ agree for at least $\min(p,q)$ digits (agreement is transitive).</p>
+      <p>Since $t \mapsto b^{-t}$ is strictly decreasing:</p>
+      $$d_T(x,z) = b^{-k(x,z)} \leq b^{-\min(k(x,y),k(y,z))} = \max(b^{-k(x,y)}, b^{-k(y,z)}) = \max(d_T(x,y), d_T(y,z))$$
+    </details>
+  </div>
+
+  <div class="content-section">
+    <h2>The No-Accumulation Property</h2>
+
+    <div class="theorem">
+      <div class="theorem-label">Theorem (No Accumulation)</div>
+      <p>In an ultrametric space, if $d(x, y) < T$ and $d(y, z) < T$, then $d(x, z) < T$.</p>
+    </div>
+
+    <p>
+      <strong>Interpretation:</strong> You <em>cannot</em> accumulate small steps to cross a threshold. 
+      A thousand errors of size $0.001$ produce a total error of at most $0.001$ — not $1.0$.
+      This is the direct opposite of the continuous case. It is an <strong>exact theorem</strong>, not an approximation.
+    </p>
+
+    <table>
+      <tr><th>Scenario</th><th>Continuous ($\mathbb{R}$)</th><th>Hierarchical ($T_b$)</th></tr>
+      <tr><td>1,000 errors of size 0.001</td><td>Total error ≤ 1.0</td><td>Total error ≤ 0.001</td></tr>
+      <tr><td>Errors accumulate?</td><td><strong>Yes</strong> (add)</td><td><strong>No</strong> (bounded by max)</td></tr>
+    </table>
+  </div>
+
+  <div class="content-section">
+    <h2>Geometric Consequences</h2>
+    
+    <h3>Every Triangle Is Isosceles</h3>
+    <p>In an ultrametric space, for any three points, the two largest distances are equal. You cannot have a scalene triangle — the geometry is rigid.</p>
+
+    <h3>Proximity Is Transitive</h3>
+    <p>"Close to" below any fixed threshold is an equivalence relation. Points either share a cluster or they don't — there is no "kind of close."</p>
+
+    <h3>Strictly Nested, Disjoint Clusters</h3>
+    <p>At threshold $T = b^{-d}$, the space partitions into exactly $b^d$ disjoint clusters. Clusters at different depths are either disjoint or one is entirely inside another — never partially overlapping.</p>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="threshold.html" class="btn btn-primary">Next: The Threshold Principle →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/tree-viz.js"></script>
+</body>
+</html>

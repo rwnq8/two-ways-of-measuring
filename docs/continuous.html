@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Continuous Way — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>The Continuous Way</h1>
+  <p class="subtitle">The number line. The triangle inequality. Why errors accumulate.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>Building the Number Line</h2>
+    <p>
+      Begin with counting: one, two, three — the <strong>natural numbers</strong> $\mathbb{N}$. Add zero and negatives for the <strong>integers</strong> $\mathbb{Z}$. Insert fractions — the <strong>rational numbers</strong> $\mathbb{Q}$, dense but with gaps. Fill all gaps to obtain the <strong>real numbers</strong> $\mathbb{R}$ — the continuous line.
+    </p>
+    <p>
+      The real numbers satisfy the <strong>Archimedean property</strong>: for any positive $x, y$, no matter how small $x$ and how large $y$, you can add $x$ enough times to exceed $y$. There are no infinitesimals. This property seems obvious — but it is precisely what causes errors to accumulate.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>The Ordinary Distance Formula</h2>
+    <p>On $\mathbb{R}$, the distance between two points is simply:</p>
+    $$d_{\mathbb{R}}(x, y) = |x - y|$$
+    <p>This satisfies all three metric axioms — non-negativity, symmetry, and the triangle inequality.</p>
+
+    <div class="info-card">
+      <h4>Examples</h4>
+      <p>$d(3, 7) = 4 \qquad d(-2.5, 1.5) = 4 \qquad d(0.001, 0.002) = 0.001$</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Why Errors Accumulate</h2>
+    <p>
+      Suppose a system maintains a target value $T$. Noise causes perturbations $\varepsilon_1, \varepsilon_2, \ldots$ over time. After $N$ perturbations:
+    </p>
+    $$x_N = T + \sum_{i=1}^{N} \varepsilon_i$$
+    <p>The total error, by repeated application of the triangle inequality:</p>
+    $$E_N = \left|\sum_{i=1}^{N} \varepsilon_i\right| \leq \sum_{i=1}^{N} |\varepsilon_i| \leq N \cdot \varepsilon$$
+
+    <div class="theorem">
+      <div class="theorem-label">Consequence</div>
+      <p>The total error can be as large as the <strong>sum</strong> of the individual errors. With enough perturbations, the error can exceed any finite bound.</p>
+    </div>
+
+    <p>
+      Even with zero-mean random perturbations, the RMS error grows as $\sigma\sqrt{N}$ — without bound. Continuous memory inevitably decays unless actively corrected.
+    </p>
+
+    <div class="info-card">
+      <h4>Concrete Example</h4>
+      <p>A sensor at 5.000 V, with ±0.001 V noise per second:</p>
+      <ul>
+        <li>After 1 hour: RMS error 0.060 V (1.2% drift)</li>
+        <li>After 1 day: RMS error 0.294 V (5.9% drift)</li>
+        <li>After 1 month: error exceeds 1.6 V — meaningless</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Interactive: Watch Errors Accumulate</h2>
+    <div class="demo-container" id="error-demo-container">
+      <div class="demo-header"><h4>Error Accumulation Demo</h4></div>
+      <div class="demo-body">
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem">
+          <strong>Left:</strong> Continuous memory — error walks away from zero. 
+          <strong>Right:</strong> Hierarchical memory — threshold suppresses errors.
+          Click <strong>Start</strong> and watch the difference.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>The Thermodynamic Wall</h2>
+    <p>
+      The only defense against accumulation is <strong>active error correction</strong>: constantly measure, compare, and correct. This costs energy — at minimum $k_B T \ln 2$ per erased bit (Landauer's principle).
+    </p>
+    <p>
+      For an $n$-bit state with noise bandwidth $B$, the power dissipation scales as:
+    </p>
+    $$P_{\text{correction}} \gtrsim n \cdot B \cdot k_B T \ln 2$$
+    <p>
+      For quantum computers with thousands of logical qubits and millions of physical qubits measured at gigahertz rates, the energy cost becomes prohibitive. This is the <strong>thermodynamic wall</strong> — the point where active correction consumes more resources than computation itself.
+    </p>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="hierarchical.html" class="btn btn-primary">Next: The Hierarchical Way →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/error-demo.js"></script>
+</body>
+</html>

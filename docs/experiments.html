@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experimental Protocols — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Experimental Protocols</h1>
+  <p class="subtitle">Testable, falsifiable predictions. Concrete proposals for first experiments.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>Protocol 1: Verify Ultrametricity</h2>
+    <p><strong>Prediction:</strong> In a hierarchical system, for any three states $A, B, C$, the two largest pairwise distances are equal (all triangles are isosceles).</p>
+    
+    <div class="steps">
+      <span class="step"><span class="step-num">1</span> Select 3 states</span>
+      <span class="step"><span class="step-num">2</span> Measure transition rates</span>
+      <span class="step"><span class="step-num">3</span> Compute $d \propto -\log(r)$</span>
+      <span class="step"><span class="step-num">4</span> Test $\Delta = d_{(3)} - d_{(2)} = 0$</span>
+    </div>
+
+    <p>
+      For a thermally activated system, $r \propto e^{-\Delta E / k_B T}$, so larger distance → lower rate. 
+      With $n = 100$ measurements per pair, construct a 95% CI for $\Delta$. If it includes zero, ultrametricity is supported. 
+      If $\Delta$ is significantly positive, the system is not ultrametric.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Protocol 2: Measure Threshold Depth</h2>
+    <p><strong>Prediction:</strong> $\log P(\text{error}) \approx \log C - (\Delta E_D / \varepsilon)^\beta$.</p>
+    <p>
+      <strong>Method:</strong> Vary temperature $T$ (varying $\varepsilon = k_B T$) at fixed encoding depth $D$. 
+      Measure error rate. Plot $\log P$ vs. $1/T$. The low-temperature slope gives $-\Delta E_D/k_B$ (for $\beta = 1$).
+      Repeat for different $D$ to verify $\Delta E_D = E_0 \cdot b^{-\alpha D}$.
+    </p>
+    <p><strong>Expected:</strong> Linear regime (exponential suppression) at low $T$; saturation at high $T$ where barrier is irrelevant; bend at $\varepsilon \approx \Delta E_D$.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Protocol 3: Demonstrate No-Accumulation</h2>
+    <p><strong>Prediction:</strong> $N$ sub-threshold perturbations → total error bounded by max individual perturbation. Compare:</p>
+    <ul>
+      <li><strong>System H (Hierarchical):</strong> Molecular conformational memory. Error count grows linearly with tiny slope $p \ll 1$. No partial error.</li>
+      <li><strong>System C (Continuous):</strong> Capacitor voltage. RMS error grows as $\delta V \sqrt{N}$.</li>
+    </ul>
+    <p><strong>Signature:</strong> Flat error rate vs. growing error magnitude. In the hierarchical system, you either have an error or you don't — no "partial" error.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Proposed First Experiment: NMR Molecular Memory</h2>
+    <p><strong>Molecule:</strong> 1,2,3,4-tetrafluorobenzene ($\text{C}_6\text{H}_2\text{F}_4$) — four $^{19}$F nuclei with natural coupling hierarchy:</p>
+    <table>
+      <tr><th>Coupling</th><th>Type</th><th>$J$ (Hz)</th></tr>
+      <tr><td>$J_{12}$</td><td>Ortho</td><td>20</td></tr>
+      <tr><td>$J_{13}$</td><td>Meta</td><td>8</td></tr>
+      <tr><td>$J_{14}$</td><td>Para</td><td>2</td></tr>
+    </table>
+    <p>
+      <strong>Encoding:</strong> Logical bit in F1–F2 pair state. Weaker couplings form deep hierarchy. 
+      Apply controlled RF noise, vary noise power, measure logical error rate. 
+      <strong>Equipment:</strong> Standard 400–600 MHz NMR spectrometer with $^{19}$F capability.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Proposed Experiment: Trapped Ion Hierarchical Qubit</h2>
+    <p>
+      <strong>Platform:</strong> Linear chain of $^{171}\text{Yb}^+$ or $^{40}\text{Ca}^+$ ions. 
+      Motional modes have a natural frequency hierarchy — center-of-mass mode (highest frequency) 
+      down to buckling modes (lowest). Encode logical bit in phonon number of the highest mode.
+    </p>
+    <p>
+      Apply controlled electric field noise. Measure logical error rate vs. noise power. 
+      <strong>Advantages:</strong> Single-quantum precision, near-unit fidelity, tunable mode hierarchy, long coherence times.
+    </p>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="implications.html" class="btn btn-primary">Next: Implications →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

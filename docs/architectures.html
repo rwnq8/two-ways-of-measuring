@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concrete Architectures — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Concrete Architectures</h1>
+  <p class="subtitle">How to build a hierarchical memory in physical reality.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>Design Specification</h2>
+    <table>
+      <tr><th>Parameter</th><th>Symbol</th><th>Description</th></tr>
+      <tr><td>Branching factor</td><td>$b$</td><td>Sub-containers per container</td></tr>
+      <tr><td>Encoding depth</td><td>$D$</td><td>Depth of logical encoding</td></tr>
+      <tr><td>Energy scale</td><td>$E_0$</td><td>Barrier at root</td></tr>
+      <tr><td>Barrier exponent</td><td>$\alpha$</td><td>$\Delta E_k = E_0 \cdot b^{-\alpha k}$</td></tr>
+      <tr><td>Noise energy</td><td>$\varepsilon$</td><td>$k_B T$ for thermal noise</td></tr>
+    </table>
+    <p>Required operations: <strong>Initialize, Hold, Read, Write, Reset.</strong></p>
+  </div>
+
+  <div class="content-section">
+    <h2>Substrate 1: Spin Chains</h2>
+    <p><strong>Hamiltonian:</strong></p>
+    $$H = -\sum_{i=1}^{N-1} J_i \, \sigma_i^z \sigma_{i+1}^z - h \sum_{i=1}^{N} \sigma_i^x$$
+    <p>with $J_i = J_0 \cdot b^{-\alpha i}$ — coupling decays exponentially along the chain.</p>
+    <p>
+      The domain wall position encodes the state. Moving the wall past spin $k$ costs energy $\propto J_k$. 
+      Shallow spins have strong coupling (large barriers); deep spins have weak coupling (small barriers).
+    </p>
+    <div class="info-card">
+      <h4>Estimated 10-spin Chain ($T = 0.1$ K)</h4>
+      <p>$J_0/k_B = 10$ K. $J_0/(k_B T) = 100$. At $D=1$: $\Delta E_1 = 5$ K, error rate $\sim 10^{-10}$ s⁻¹. Mean time between errors: $\sim 300$ years.</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Substrate 2: Molecular Conformational Memory</h2>
+    <p>
+      An organic molecule with rotatable bonds at different barrier scales. Each bond's orientation 
+      is one digit in the tree address. High-barrier bonds encode the logical bit; low-barrier bonds 
+      absorb thermal jitter.
+    </p>
+    <p><strong>Example:</strong> Biphenyl derivative with barriers at 1500 K, 1000 K, 500 K, and 250 K — a natural hierarchy. Readout via NMR spectroscopy.</p>
+  </div>
+
+  <div class="content-section">
+    <h2>Substrate 3: Superconducting Hierarchical Qubits</h2>
+    <p><strong>Potential engineering via Fourier synthesis:</strong></p>
+    $$U(\varphi) = -E_J \sum_{m=0}^{M} b^{-\alpha m} \cos(b^m \varphi)$$
+    <p>
+      Each term creates wells at a different scale. Realized with Josephson junction arrays 
+      of varying sizes. At $T = 10$ mK and $E_J/h = 50$ GHz, all levels down to $M = 4$ are well protected.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Substrate 4: Optical Nested Cavities</h2>
+    <p>
+      Series of nested Fabry-Perot cavities. A photon in the innermost cavity is most confined. 
+      To escape, it must tunnel through multiple partially reflective mirrors — each a barrier.
+      Mirror reflectivities $0.99 \to 0.999 \to 0.9999 \to 0.99999$ create the hierarchy.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Encoding Schemes</h2>
+    <ul>
+      <li><strong>Direct:</strong> Logical bit = first digit. For $b=2$, states $0\ldots$ → logical 0, $1\ldots$ → logical 1.</li>
+      <li><strong>Redundant:</strong> Multiple branches encode the same bit. Depth-2 errors don't flip the logical bit.</li>
+      <li><strong>Parity-check:</strong> Monitor subtree parities at intermediate depths to detect and localize errors — performed rarely due to exponential suppression.</li>
+    </ul>
+  </div>
+
+  <div class="content-section">
+    <h2>Comparison with Surface Codes</h2>
+    <table>
+      <tr><th>Aspect</th><th>Surface Code</th><th>Hierarchical Encoding</th></tr>
+      <tr><td>Protection</td><td>Active syndrome + feedback</td><td>Passive energy barriers</td></tr>
+      <tr><td>Physical/logical ratio</td><td>$O(d^2)$</td><td>$O(b^D)$, $D \sim \log(1/p)$</td></tr>
+      <tr><td>Idle energy</td><td>Circuits active</td><td>Near zero</td></tr>
+      <tr><td>Error accumulation</td><td>Between cycles</td><td>Below threshold: none</td></tr>
+      <tr><td>Maturity</td><td>Demonstrated</td><td>Theoretical proposal</td></tr>
+    </table>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="experiments.html" class="btn btn-primary">Next: Experimental Protocols →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

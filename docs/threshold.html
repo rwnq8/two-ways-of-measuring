@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Threshold Principle — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>The Threshold Principle</h1>
+  <p class="subtitle">Energy landscapes as nested containers. Why errors are exponentially suppressed.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>Energy Landscapes as Nested Containers</h2>
+    <p>
+      The container metaphor has a direct physical realization. A <strong>potential energy well</strong> is a container. The <strong>barrier height</strong> $\Delta E$ is the energy required to cross the boundary. A landscape of nested wells — large wells containing smaller wells containing even smaller wells — is a hierarchical energy landscape.
+    </p>
+
+    <div class="definition">
+      <strong>Definition (Hierarchical energy landscape).</strong> A system with state space $T_b$ has a hierarchical energy landscape if barriers satisfy:
+      $$\Delta E_k = E_0 \cdot b^{-\alpha k}$$
+      where $E_0$ is the energy scale at the root, $\alpha > 0$ controls barrier decay, and $k$ is the divergence depth.
+    </div>
+
+    <p>
+      At the root ($k=0$), the barrier is $E_0$ — the largest. At depth $k$, barriers are $b^{-\alpha k}$ times smaller. 
+      Deep levels have tiny barriers (the system moves freely). Shallow levels have large barriers (the system is strongly confined).
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Two Kinds of Memory</h2>
+
+    <div class="info-card">
+      <h4>Type A: Continuous Memory</h4>
+      <p>
+        Store a value as a point on a line — water column height, capacitor voltage, needle angle. 
+        Perturbations displace the point continuously. Error accumulates with time. 
+        Constant measurement and correction required. Energy cost scales with precision.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <h4>Type B: Hierarchical Memory</h4>
+      <p>
+        Store a value as the identity of a container at depth $D$. Perturbations below barrier $\Delta E_D$ 
+        cause jitter within the container but cannot change the logical state. Only above-threshold perturbations 
+        can cause errors — and these are exponentially rare. Energy cost is near-zero during idle.
+      </p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Formal Statement</h2>
+
+    <div class="theorem">
+      <div class="theorem-label">The Threshold Principle</div>
+      <p>For a system with hierarchical energy landscape $\Delta E_k = E_0 \cdot b^{-\alpha k}$, logical information encoded at depth $D$, and noise energy $\varepsilon$ (with $\varepsilon < \Delta E_D$):</p>
+      $$P(\text{error}) \leq C \cdot \exp\!\left(-\left(\frac{\Delta E_D}{\varepsilon}\right)^{\beta}\right)$$
+      <p>where $C$ is an attempt frequency (typically $10^9$–$10^{13}$ Hz), and $\beta$ is:</p>
+      <ul>
+        <li>$\beta = 1$ for classical thermal activation (Arrhenius law)</li>
+        <li>$\beta = 2$ for quantum tunneling (WKB approximation)</li>
+      </ul>
+    </div>
+
+    <p>
+      <strong>The error rate is exponentially suppressed</strong> in $\Delta E_D / \varepsilon$. 
+      Double the ratio, square the error rate. Increase $E_0$ (larger barriers) or decrease $\varepsilon$ 
+      (lower temperature), and the protection improves dramatically.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Why Exponential?</h2>
+    <p>
+      A classical particle in a well of depth $\Delta E$, in contact with a heat bath at temperature $T$, 
+      has probability $\propto e^{-\Delta E / k_B T}$ of acquiring enough thermal energy to escape (Boltzmann factor). 
+      The escape <em>rate</em> multiplies this by an attempt frequency $\nu_0 \sim 10^{12}$ Hz:
+    </p>
+    $$\Gamma_{\text{escape}} \approx \nu_0 \cdot e^{-\Delta E / k_B T}$$
+    <p>
+      Quantum tunneling provides an alternative path, with rate $\propto \exp(-\text{const} \cdot \sqrt{\Delta E})$ 
+      for parabolic barriers. In either case, the suppression is exponential in the barrier height.
+    </p>
+
+    <div class="highlight-box">
+      <p><strong>Key difference from continuous:</strong> In a flat potential, the particle drifts freely — error grows as $\sqrt{t}$. In a well, it jiggles but stays — error is threshold-suppressed. The difference is a floor vs. a bowl.</p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>Engineering Implications</h2>
+    <ol>
+      <li><strong>No active correction during idle.</strong> Barriers do the work. Zero energy expenditure.</li>
+      <li><strong>Only rare global resets.</strong> Errors are detected by parity checks and corrected occasionally.</li>
+      <li><strong>Logarithmic resource scaling.</strong> Required depth $D \sim \log(1/p)$ for error rate $p$. Exponentially better than polynomial QEC scaling.</li>
+      <li><strong>Practical requirements:</strong> Low temperature ($\varepsilon < \Delta E_D$), realizable energy landscape, operational access without destroying protection.</li>
+    </ol>
+  </div>
+
+  <div class="content-section">
+    <h2>Numerical Illustration</h2>
+    <p>With $E_0 = 100 \cdot k_B T$, $\alpha = 1$, $b = 2$, $C = 10^{12}$ Hz, $\beta = 1$:</p>
+    <table>
+      <tr><th>Depth $D$</th><th>Barrier ($k_B T$)</th><th>Error Rate (s⁻¹)</th><th>Mean Time Between Errors</th></tr>
+      <tr><td>$0$</td><td>$100$</td><td>$\sim 10^{-32}$</td><td>$\sim 10^{24}$ years</td></tr>
+      <tr><td>$1$</td><td>$50$</td><td>$\sim 10^{-10}$</td><td>$\sim 170$ years</td></tr>
+      <tr><td>$2$</td><td>$25$</td><td>$\sim 10^{1}$</td><td>$\sim 0.07$ seconds</td></tr>
+      <tr><td>$3$</td><td>$12.5$</td><td>$\sim 10^{6}$</td><td>$\sim 0.27 \; \mu\text{s}$</td></tr>
+    </table>
+    <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem;">
+      Shallower encoding (smaller $D$) gives stronger protection. At $D = 2$, the barrier is only $25 \, k_B T$ — errors are frequent. At $D = 1$, errors are astronomically rare. The crossover is where $\Delta E_D \approx 20 \, k_B T$.
+    </p>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="deep-structure.html" class="btn btn-primary">Next: The Deep Structure →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

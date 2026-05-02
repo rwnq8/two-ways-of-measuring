@@ -1,0 +1,10 @@
+# GitHub Pages configuration
+title: Two Ways of Measuring
+description: A framework for distance, memory, and fault-tolerant computation — built from first principles.
+baseurl: ""
+url: ""
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
+exclude:
+  - README.md

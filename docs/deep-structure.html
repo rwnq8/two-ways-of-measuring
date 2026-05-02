@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Deep Structure — Two Ways of Measuring</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  options: { ignoreHtmlClass: 'no-math' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Two Ways of Measuring</a>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="continuous.html">Continuous</a>
+      <a href="hierarchical.html">Hierarchical</a>
+      <a href="threshold.html">Threshold</a>
+      <a href="deep-structure.html">Deep Structure</a>
+      <a href="architectures.html">Architectures</a>
+      <a href="experiments.html">Experiments</a>
+      <a href="implications.html">Implications</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>The Deep Structure</h1>
+  <p class="subtitle">p-adic numbers. Ostrowski's theorem. Why there are only two ways.</p>
+</div>
+
+<div class="container">
+  <div class="content-section">
+    <h2>p-adic Numbers</h2>
+    <p>
+      The tree distance $d_T(v,w) = b^{-k}$ is not an arbitrary construction. It is the natural distance 
+      on the <strong>$p$-adic numbers</strong> — one of the most important structures in number theory.
+    </p>
+
+    <div class="definition">
+      <strong>Definition (p-adic order).</strong> For a prime $p$, factor any rational $x \neq 0$ as $x = p^k \cdot \frac{a}{b}$, where $a, b$ are not divisible by $p$. Then $\text{ord}_p(x) = k$. Examples:
+      <ul>
+        <li>$\text{ord}_2(8) = 3$ (since $8 = 2^3$)</li>
+        <li>$\text{ord}_3(12) = 1$ (since $12 = 2^2 \cdot 3$)</li>
+        <li>$\text{ord}_2(1/2) = -1$</li>
+        <li>$\text{ord}_p(0) = \infty$ (convention)</li>
+      </ul>
+    </div>
+
+    <div class="definition">
+      <strong>Definition (p-adic absolute value).</strong> $|x|_p = p^{-\text{ord}_p(x)}$, with $|0|_p = 0$.
+    </div>
+
+    <p>
+      <strong>This is identical in form to the tree distance.</strong> Replace $b$ with $p$, and the 
+      common prefix length $k$ with the $p$-adic order of the difference: $d_p(x, y) = |x - y|_p$.
+      Two numbers are $p$-adically close if their difference is divisible by a large power of $p$ — 
+      their base-$p$ expansions agree for many digits.
+    </p>
+
+    <div class="theorem">
+      <div class="theorem-label">Key Properties of $|\cdot|_p$</div>
+      <ol>
+        <li>$|x|_p \geq 0$, with equality only for $x = 0$</li>
+        <li>$|xy|_p = |x|_p \cdot |y|_p$ (multiplicativity)</li>
+        <li>$|x + y|_p \leq \max(|x|_p, |y|_p)$ — <strong>the strong triangle inequality!</strong></li>
+      </ol>
+    </div>
+
+    <p>
+      The $p$-adic numbers $\mathbb{Q}_p$ are the completion of $\mathbb{Q}$ under $|\cdot|_p$, 
+      just as $\mathbb{R}$ is the completion under the ordinary absolute value. They form an 
+      <strong>ultrametric field</strong> — the algebraic counterpart of the tree $T_p$.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>Ostrowski's Theorem</h2>
+
+    <div class="theorem">
+      <div class="theorem-label">Ostrowski's Theorem (1916)</div>
+      <p>
+        Every non-trivial absolute value on $\mathbb{Q}$ is equivalent either to:
+      </p>
+      <ol>
+        <li>The ordinary (Archimedean) absolute value $|\cdot|_\infty$, <strong>or</strong></li>
+        <li>A $p$-adic absolute value $|\cdot|_p$ for some prime $p$.</li>
+      </ol>
+      <p>There is <strong>no third way.</strong></p>
+    </div>
+
+    <div class="highlight-box">
+      <p>
+        Any coherent notion of distance on the rational numbers — one that respects addition and multiplication — 
+        must be either <strong>Archimedean</strong> (continuous, additive) or <strong>ultrametric</strong> 
+        (hierarchical, maximum-based). The two ways of measuring are forced by the structure of number itself.
+      </p>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>The p-adic Interpretation of the Threshold Principle</h2>
+    <p>
+      In $T_p$, the ball of radius $p^{-D}$ is the <strong>encoding cluster</strong>. Perturbations of 
+      $p$-adic size $\delta < p^{-D}$ cannot move the system out of this cluster. Perturbations with 
+      $\delta \geq p^{-D}$ can change the logical state — but must cross the corresponding energy barrier.
+    </p>
+    <p>The physical energy barrier and the $p$-adic cluster radius are related:</p>
+    $$\Delta E_D = E_0 \cdot p^{-\alpha D} = E_0 \cdot (p^{-D})^{\alpha}$$
+    <p>In $p$-adic language: <em>noise with $p$-adic size less than $p^{-D}$ is irrelevant to logical information encoded at depth $D$.</em></p>
+  </div>
+
+  <div class="content-section">
+    <h2>The Convergence of Independent Lines</h2>
+    <p>Four independent lines of evidence, from unrelated fields, converge on a single statement:</p>
+
+    <div class="info-card">
+      <h4>Line 1: Metric Space Theory</h4>
+      <p>The strong triangle inequality produces no-accumulation, isosceles triangles, and nested disjoint clusters. Ultrametric spaces form a distinct category with radically different geometry.</p>
+    </div>
+
+    <div class="info-card">
+      <h4>Line 2: Number Theory (Ostrowski)</h4>
+      <p>The only absolute values on $\mathbb{Q}$ are Archimedean and $p$-adic. Ultrametric geometry is forced by algebraic consistency — not an arbitrary invention.</p>
+    </div>
+
+    <div class="info-card">
+      <h4>Line 3: Statistical Mechanics</h4>
+      <p>Barrier crossing obeys the Arrhenius law: rate $\propto e^{-\Delta E / k_B T}$. Hierarchical barriers → exponential error suppression. The landscape must be ultrametric.</p>
+    </div>
+
+    <div class="info-card">
+      <h4>Line 4: Information Theory</h4>
+      <p>Error correction cost: polynomial in Archimedean spaces, logarithmic in ultrametric spaces. Geometry directly determines information-theoretic efficiency.</p>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>To build a memory that endures without active correction, engineer the state space to be ultrametric.</strong></p>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="architectures.html" class="btn btn-primary">Next: Concrete Architectures →</a>
+  </div>
+</div>
+
+<footer>
+  <p>Two Ways of Measuring · Version 0.3 · <a href="index.html">Home</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
